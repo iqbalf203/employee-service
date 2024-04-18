@@ -72,7 +72,7 @@ public class DepartmentController {
 		
 		service.deleteDepartment(id);
 		
-		return ResponseEntity.status(HttpStatus.ACCEPTED).body(null);
+		return ResponseEntity.status(HttpStatus.OK).body(null);
 	}
 	
 }
