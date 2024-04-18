@@ -3,6 +3,7 @@ package com.ibm.springboot.demo.controller;
 import java.util.List;	
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -55,7 +56,7 @@ public class DepartmentController {
 		
 		Department department = service.addDepartment(tempDepartment);
 		
-		return ResponseEntity.ok(department);
+		return ResponseEntity.status(HttpStatus.CREATED).body(department);
 		
 	}
 	
@@ -63,7 +64,7 @@ public class DepartmentController {
 	public ResponseEntity<Department> updateDepartment(@PathVariable(name = "id") String id,@RequestBody Department tempDepartment){
 		
 		Department department = service.updateDepartment(tempDepartment, id);
-		return ResponseEntity.ok(department);
+		return ResponseEntity.status(HttpStatus.CREATED).body(department);
 	}
 	
 	@DeleteMapping("/delete/id-{id}")
@@ -71,7 +72,7 @@ public class DepartmentController {
 		
 		service.deleteDepartment(id);
 		
-		return ResponseEntity.ok("Department Deleted");
+		return ResponseEntity.status(HttpStatus.ACCEPTED).body(null);
 	}
 	
 }

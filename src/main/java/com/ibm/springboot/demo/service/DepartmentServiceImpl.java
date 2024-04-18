@@ -3,15 +3,20 @@ package com.ibm.springboot.demo.service;
 import java.util.List;
 import java.util.Optional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ibm.springboot.demo.Application;
 import com.ibm.springboot.demo.exception.DepartmentNotFoundException;
 import com.ibm.springboot.demo.model.Department;
 import com.ibm.springboot.demo.repository.DepartmentRepository;
 
 @Service
 public class DepartmentServiceImpl implements DepartmentService {
+	
+	private final Logger LOG =LoggerFactory.getLogger(this.getClass());
 	
 	@Autowired
 	DepartmentRepository repository;
@@ -22,7 +27,7 @@ public class DepartmentServiceImpl implements DepartmentService {
 		List<Department> dpList = repository.findAll();
 		if (dpList.isEmpty()) {
 			String errorMessage = "No Department exist!";
-
+			LOG.warn(errorMessage);
 			throw new DepartmentNotFoundException(errorMessage);
 		}
 		return dpList;
@@ -36,6 +41,7 @@ public class DepartmentServiceImpl implements DepartmentService {
 		if (optDepartment.isEmpty()) {
 			
 			String errorMessage = "Department id: "+departmentId+" not found.";
+			LOG.warn(errorMessage);
 			throw new DepartmentNotFoundException(errorMessage);
 			
 		}
@@ -50,6 +56,7 @@ public class DepartmentServiceImpl implements DepartmentService {
 	public Department addDepartment(Department department) {
 		if (repository.findById(department.getId())!=null) {
 			String errorMessage = "Department already exist";
+			LOG.warn(errorMessage);
 			throw new DepartmentNotFoundException(errorMessage);
 		}
 			
@@ -97,7 +104,7 @@ public class DepartmentServiceImpl implements DepartmentService {
 		List<Department> dpList = repository.findByDepartmentName(departmentName);
 		if (dpList.isEmpty()) {
 			String errorMessage = "No Department named" + departmentName + " found!";
-
+			LOG.warn(errorMessage);
 			throw new DepartmentNotFoundException(errorMessage);
 		}
 		return dpList;
