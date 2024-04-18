@@ -19,38 +19,58 @@ public class DepartmentServiceImpl implements DepartmentService {
 	@Override
 	public List<Department> getAllDepartments() {
 		
-		return repository.findAll();
+		List<Department> dpList = repository.findAll();
+		if (dpList.isEmpty()) {
+			String errorMessage = "No Department exist!";
+
+			throw new DepartmentNotFoundException(errorMessage);
+		}
+		return dpList;
 	}
 
 	@Override
 	public Department getDepartmentById(String departmentId) {
 		
-		try {
-		Optional<Department> department = repository.findById(departmentId);
-		return department.get();
+		Optional<Department> optDepartment = repository.findById(departmentId);
+		
+		if (optDepartment.isEmpty()) {
+			
+			String errorMessage = "Department id: "+departmentId+" not found.";
+			throw new DepartmentNotFoundException(errorMessage);
+			
 		}
-		catch(Exception e) {
-			throw new DepartmentNotFoundException(e);
+		else {
+			
+			return optDepartment.get();
+			
 		}
 	}
 
 	@Override
 	public Department addDepartment(Department department) {
+		if (repository.findById(department.getId())!=null) {
+			String errorMessage = "Department already exist";
+			throw new DepartmentNotFoundException(errorMessage);
+		}
 			
 		return repository.save(department);
 	}
 
 	@Override
-	public void deleteDepartment(String departmentId) {
+	public Department deleteDepartment(String departmentId) {
+		
+		Department tempDepartment = getDepartmentById(departmentId);
 		
 		repository.deleteById(departmentId);
+		
+		return tempDepartment;
 		
 	}
 
 	@Override
-	public Department updateDepartment(Department department, String id) {
+	public Department updateDepartment(Department department, String departmentId) {
 		
-		Department tempDepartment = getDepartmentById(id);
+		Department tempDepartment = getDepartmentById(departmentId);
 		
 		if(department.getDepartmentName()!=null) {
 			
@@ -69,6 +89,18 @@ public class DepartmentServiceImpl implements DepartmentService {
 		}
 		
 		return repository.save(tempDepartment);
+	}
+
+	@Override
+	public List<Department> getByDepartmentName(String departmentName) {
+		
+		List<Department> dpList = repository.findByDepartmentName(departmentName);
+		if (dpList.isEmpty()) {
+			String errorMessage = "No Department named" + departmentName + " found!";
+
+			throw new DepartmentNotFoundException(errorMessage);
+		}
+		return dpList;
 	}
 
 	

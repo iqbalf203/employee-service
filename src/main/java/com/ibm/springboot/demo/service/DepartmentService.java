@@ -14,7 +14,9 @@ public interface DepartmentService {
 	
 	public abstract Department updateDepartment(Department department,String id);
 	
-	public abstract void deleteDepartment(String departmentId);
+	public abstract Department deleteDepartment(String departmentId);
+	
+	public abstract List<Department> getByDepartmentName(String departmentName);
 	
 
 }
