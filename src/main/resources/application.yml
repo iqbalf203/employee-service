@@ -1,0 +1,14 @@
+logging:
+  file:
+    name: ibm-emp.log
+spring:
+  application:
+    name: ibm.springboot-demo
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/
+      database: test
+    
+server:
+  port: 8081
+  

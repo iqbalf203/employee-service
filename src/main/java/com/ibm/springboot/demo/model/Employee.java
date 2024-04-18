@@ -1,41 +1,56 @@
 package com.ibm.springboot.demo.model;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+@Document("employee")
 public class Employee {
 	
-	private Integer empId;
-	private String empName;
-	private Double salary;
+	@Id
+	private String empId;
+	private String name;
+	private String email;
+	private String address;
 	public Employee() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public Employee(int empId, String empName, double salary) {
+	public Employee(String empId, String name, String email, String address) {
 		super();
 		this.empId = empId;
-		this.empName = empName;
-		this.salary = salary;
+		this.name = name;
+		this.email = email;
+		this.address = address;
 	}
-	public int getEmpId() {
+	public String getEmpId() {
 		return empId;
 	}
-	public void setEmpId(int empId) {
+	public void setEmpId(String empId) {
 		this.empId = empId;
 	}
-	public String getEmpName() {
-		return empName;
+	public String getName() {
+		return name;
 	}
-	public void setEmpName(String empName) {
-		this.empName = empName;
+	public void setName(String name) {
+		this.name = name;
 	}
-	public double getSalary() {
-		return salary;
+	public String getEmail() {
+		return email;
 	}
-	public void setSalary(double salary) {
-		this.salary = salary;
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	public String getAddress() {
+		return address;
+	}
+	public void setAddress(String address) {
+		this.address = address;
 	}
 	@Override
 	public String toString() {
-		return "Employee [empId=" + empId + ", empName=" + empName + ", salary=" + salary + "]";
+		return "Employee [empId=" + empId + ", name=" + name + ", email=" + email + ", address=" + address + "]";
 	}
-
+	
+	
 }
+	
